@@ -1,16 +1,24 @@
 import React from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {blogData} from "../Api/BlogData/blogData.js";
+import {routeTypes} from "../urls.jsx";
+import {useAuth} from "./Auth/auth.jsx";
 
 function BlogPost(props) {
 
     const navigate = useNavigate()
     const {slug} = useParams()
 
+    const auth = useAuth()
+
     const blogPost = blogData.find(post => post.slug === slug)
 
+    const isOwner = auth.user?.username === blogPost.author
+
+    const canDelete = auth.user?.isAdmin || isOwner
+
     function returnToBlog() {
-        navigate('/blog')
+        navigate(routeTypes.blog)
     }
 
     return (
@@ -35,6 +43,11 @@ function BlogPost(props) {
                 </div>
                 <h3>by @{blogPost.author}</h3>
                 <p>{blogPost.content}</p>
+
+                {canDelete && (
+                    <button>Eliminar Post</button>
+                )}
+
             </div>
         </>
     );
