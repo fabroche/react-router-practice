@@ -1,6 +1,6 @@
 {
-  "name": "react-router-6",
-  "private": true,
+  "name": "react-router-practice",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
